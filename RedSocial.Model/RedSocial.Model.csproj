@@ -43,5 +43,15 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedSocial.Entity\RedSocial.Entity.csproj">
+      <Project>{46916336-f279-4c94-af17-61839f8ab1b4}</Project>
+      <Name>RedSocial.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedSocial.Helper\RedSocial.Helper.csproj">
+      <Project>{c248f194-29b4-43cb-86a7-94345583205c}</Project>
+      <Name>RedSocial.Helper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

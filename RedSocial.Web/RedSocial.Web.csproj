@@ -113,6 +113,20 @@
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedSocial.Entity\RedSocial.Entity.csproj">
+      <Project>{46916336-f279-4c94-af17-61839f8ab1b4}</Project>
+      <Name>RedSocial.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedSocial.Helper\RedSocial.Helper.csproj">
+      <Project>{c248f194-29b4-43cb-86a7-94345583205c}</Project>
+      <Name>RedSocial.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedSocial.Model\RedSocial.Model.csproj">
+      <Project>{a6069673-9871-49c4-8461-52e6ae575c57}</Project>
+      <Name>RedSocial.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
