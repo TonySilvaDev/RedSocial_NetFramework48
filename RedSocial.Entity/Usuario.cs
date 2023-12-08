@@ -15,7 +15,7 @@ namespace RedSocial.Entity
         public string Correo { get; set; }
 
         [Required]
-        [StringLength(32)]
+        [StringLength(10, MinimumLength = 4, ErrorMessage = "Debe ser mayor a 4 caracteres y menor a 10")]
         public string Contrasena { get; set; }
 
         [Required]

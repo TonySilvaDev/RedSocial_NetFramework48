@@ -27,5 +27,12 @@ namespace RedSocial.Entity
         [Required]
         [StringLength(20)]
         public string FechaRegistro { get; set; }
+
+        public Foto()
+        {
+            Foto1 = "no-photo.jpg";
+            Foto2 = "no-photo.jpg";
+            Foto3 = "no-photo.jpg";
+        }
     }
 }
