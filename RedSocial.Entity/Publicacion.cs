@@ -1,13 +1,10 @@
-namespace RedSocial.Model
+namespace RedSocial.Entity
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Publicacion")]
-    public partial class Publicacion
+    public class Publicacion
     {
         public int id { get; set; }
 
@@ -23,8 +20,8 @@ namespace RedSocial.Model
         [StringLength(20)]
         public string FechaRegistro { get; set; }
 
-        public virtual Usuario Usuario { get; set; }
+        public Usuario Emisor { get; set; }
 
-        public virtual Usuario Usuario1 { get; set; }
+        public Usuario Receptor { get; set; }
     }
 }

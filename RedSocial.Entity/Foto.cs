@@ -1,13 +1,10 @@
-namespace RedSocial.Model
+namespace RedSocial.Entity
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Foto")]
-    public partial class Foto
+    public class Foto
     {
         public int id { get; set; }
 
