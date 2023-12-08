@@ -1,40 +1,141 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/Assets/favicon.ico" />
+    <!-- META INFO -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Una Red Social Para Programadores" />
+    <meta name="generator" content="Hermes CMS" />
+
+    <link href="~/Assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/style.css" rel="stylesheet" />
+    <link href="~/Assets/js/datepicker/css/datepicker.css" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="~/Assets/js/jquery-1.11.0.min.js"></script>
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+    <script>
+        function base_url(url) {
+            return '@(Url.Content("~/"))' + url;
+        }
+        function redirect(href) {
+            window.location.href = '@(Url.Content("~/"))' + href;
+        }
+    </script>
+
+    <div class="container">
+
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="~/Inicio">Mi Red Social</a>
+                </div>
+
+                <!-- Collect the new links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">@usuario.Nombre<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="~/Usuario/Perfil">Modificar Mis Datos</a></li>
+                                <li class="divider"></li>
+                                @if (usuario.Admin == 1)
+                                {
+                                    <li><a href="~/Admin/Reporte">Admon. de usuarios</a></li>
+                                    <li class="divider"></li>
+                                }
+
+                                <li><a href="~/Usuario/Logout">Desconectarme</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        @if (usuario.Sexo == null || usuario.FechaNacimiento == null)
+        {
+            <div class="alert alert-warning text-center">Su perfil no esta completado, haga click en <a href="~/Usuario/Perfil"><b>este enlace</b></a> para hacerlo ahora.</div>
+        }
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Mi Perfil</div>
+                    <div class="panel-body">
+                        <div class="thumbnail">
+                            <a href="~/Usuario/Ver/@usuario.Url">
+                                <img src="~/Uploads/@usuario.Foto.Foto2" alt="@usuario.Nombre" />
+                            </a>
+                        </div>
+                        <ul class="list-unstyled">
+                            <li><b>Nombre:</b> @usuario.Nombre</li>
+                            @if (usuario.FechaNacimiento != null)
+                            {
+                                <li>
+                                    <b>Edad:</b> @(ViewHelper.GetAge(usuario.FechaNacimiento)) años
+                                </li>
+                            }
+                            @if (usuario.Sexo > 0)
+                            {
+                                <li>
+                                    <b>Sexo:</b> @(usuario.Sexo == 1 ? "Hombre" : "Mujer")
+                                </li>
+                            }
+                            @if (usuario.UsuarioConocimientos != null)
+                            {
+                                <li>
+                                    <b>Conocimientos:</b> @usuario.UsuarioConocimientos.Count()
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="panel-heading">Programadores</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            @foreach (var u in usuarios)
+                            {
+                                <div class="col-md-4">
+                                    <div class="thumbnail">
+                                        <a href="~/Usuario/Ver/@u.Url">
+                                            <img src="~/Uploads/@u.Foto.Foto3" alt="@u.Nombre" title="@u.Nombre" />
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+            <div class="col-md-9 col-sm-9">
+                @RenderBody()
             </div>
         </div>
-    </div>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
+    <hr />
+    <div class="text-center">Desarrollado por <b>Antonio Silva</b></div>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Assets/js/bootstrap.min.js"></script>
+    <script src="~/Assets/js/jquery.form.js"></script>
+    <script src="~/Assets/js/ini.js"></script>
+    <script src="~/Assets/js/jquery.validate.min.js"></script>
+    <script src="~/Assets/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Assets/js/datepicker/js/bootstrap-datepicker.js"></script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
