@@ -10,7 +10,7 @@ namespace RedSocial.Model
     public partial class RedSocialContext : DbContext
     {
         public RedSocialContext()
-            : base("name=RedSocialContext")
+            : base("name=RedSocialDB")
         {
         }
 
