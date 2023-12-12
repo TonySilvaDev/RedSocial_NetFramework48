@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedSocialContext.cs" />
+    <Compile Include="ResponseModel.cs" />
+    <Compile Include="UsuarioModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RedSocial.Entity\RedSocial.Entity.csproj">
