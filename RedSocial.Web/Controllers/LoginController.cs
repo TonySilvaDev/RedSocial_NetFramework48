@@ -16,6 +16,20 @@ namespace RedSocial.Web.Controllers
 
         [HttpPost]
         [OnlyAjaxRequest]
+        public JsonResult Acceder(string Correo, string Contrasena)
+        {
+            if (ModelState.IsValid)
+            {
+                return Json(um.Acceder(new Usuario { Correo = Correo, Contrasena = Contrasena }));
+            }
+            else
+            {
+                return Json(new { response = false, message = "Ocurrió un error con la validación del formulario" });
+            }
+        }
+
+        [HttpPost]
+        [OnlyAjaxRequest]
         public JsonResult Registrar(Usuario usuario)
         {
             if (ModelState.IsValid)

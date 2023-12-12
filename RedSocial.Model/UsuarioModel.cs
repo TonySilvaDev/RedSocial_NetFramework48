@@ -46,5 +46,41 @@ namespace RedSocial.Model
 
             return rm;
         }
+
+        public ResponseModel Acceder(Usuario usuario)
+        {
+            using (var context = new RedSocialContext())
+            {
+                try
+                {
+                    // Encriptamos la contraseña para comparar
+                    usuario.Contrasena = HashHelper.MD5(usuario.Contrasena);
+
+                    var _usuario = context.Usuario
+                                .Where(x =>
+                                x.Contrasena == usuario.Contrasena &&
+                                x.Correo == usuario.Correo
+                                ).SingleOrDefault();
+
+                    if (_usuario != null)
+                    {
+                        SessionHelper.AddUserToSession(_usuario.id.ToString());
+
+                        rm.SetResponse(true);
+                        rm.href = "Inicio";
+                    }
+                    else
+                    {
+                        rm.SetResponse(false, "El usuario ingresado no existe");
+                    }
+                }
+                catch (Exception e)
+                {
+                    ELog.Save(this, e);
+                }
+            }
+
+            return rm;
+        }
     }
 }
