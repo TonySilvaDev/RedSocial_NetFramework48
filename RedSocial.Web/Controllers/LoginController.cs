@@ -1,5 +1,6 @@
 ﻿using RedSocial.Entity;
 using RedSocial.Model;
+using RedSocial.Web.CustomAttributes;
 using System.Web.Mvc;
 
 namespace RedSocial.Web.Controllers
@@ -14,6 +15,7 @@ namespace RedSocial.Web.Controllers
         }
 
         [HttpPost]
+        [OnlyAjaxRequest]
         public JsonResult Registrar(Usuario usuario)
         {
             if (ModelState.IsValid)
