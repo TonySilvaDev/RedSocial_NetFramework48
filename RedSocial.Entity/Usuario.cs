@@ -1,5 +1,6 @@
 namespace RedSocial.Entity
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,6 +31,15 @@ namespace RedSocial.Entity
 
         [StringLength(10)]
         public string FechaNacimiento { get; set; }
+
+        public List<UsuarioConocimiento> UsuarioConocimientos { get; set; }
+
+        [NotMapped]
+        /* Le inidica al entity framework que este campo no va a ser considerando,
+         * ya que supongamos que hagamos un insert este poria crear el insert incluyendo 
+         * a la propiedad Foto como campo, cosa que no es asi
+         */
+        public Foto Foto { get; set; }
 
         [StringLength(200)]
         public string Url { get; set; }
