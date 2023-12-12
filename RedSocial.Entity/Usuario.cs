@@ -13,6 +13,7 @@ namespace RedSocial.Entity
 
         [Required]
         [StringLength(50)]
+        [EmailAddress]
         public string Correo { get; set; }
 
         [Required]
