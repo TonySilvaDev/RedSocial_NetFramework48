@@ -14,10 +14,11 @@ namespace RedSocial.Model
         {
         }
 
-        public virtual DbSet<Conocimiento> Conocimiento { get; set; }
-        public virtual DbSet<Foto> Foto { get; set; }
-        public virtual DbSet<Publicacion> Publicacion { get; set; }
-        public virtual DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Conocimiento> Conocimiento { get; set; }
+        public DbSet<Foto> Foto { get; set; }
+        public DbSet<UsuarioConocimiento> UsuarioConocimiento { get; set; }
+        public DbSet<Publicacion> Publicacion { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

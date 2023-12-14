@@ -20,8 +20,10 @@ namespace RedSocial.Entity
         [StringLength(20)]
         public string FechaRegistro { get; set; }
 
+        [NotMapped] // Para que no aparezca en la consulta
         public Usuario Emisor { get; set; }
 
+        [NotMapped] // Para que no aparezca en la consulta
         public Usuario Receptor { get; set; }
     }
 }

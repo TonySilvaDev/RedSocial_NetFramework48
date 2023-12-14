@@ -2,6 +2,17 @@
     ViewBag.Title = "Que Sucede En La Red";
 }
 
+<script>
+    $(document).ready(function () {
+        CargarPublicaciones();
+    });
+
+    function CargarPublicaciones() {
+        $("#publicaciones").html('<blink>Cargando...</blink>');
+        $("#publicaciones").load(base_url('Inicio/Publicaciones'));
+    }
+</script>
+
 <div class="page-header remove-margin-top">
     <h1>Que Sucede En La Red</h1>
 </div>

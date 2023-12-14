@@ -1,0 +1,29 @@
+﻿@model List<Publicacion>
+@{
+    int usuario_id = ViewBag.Usuario_id;
+}
+
+<div class="row">
+    @foreach (var p in Model)
+    {
+        <div class="col-md-12">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-md-10">
+                        <b>@p.Emisor.Nombre</b>
+                        @if (p.Para != p.De)
+                        {
+                            <small><i class="fa fa-play"></i></small>@p.Receptor.Nombre @p.Receptor.Apellido
+                        }
+                        <br />
+                        <small class="text-muted">@ViewHelper.TimeAgo(p.FechaRegistro)</small>
+                        <p class="remove-margin-bottom">
+                            @p.Contenido
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
