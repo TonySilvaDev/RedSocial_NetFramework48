@@ -9,11 +9,18 @@
         <div class="col-md-12">
             <div class="well well-sm">
                 <div class="row">
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <a href="~/Usuario/Ver/@p.Emisor.Url">
+                                <img src="~/Uploads/@p.Emisor.Foto.Foto3" alt="@p.Emisor.Nombre" />
+                            </a>
+                        </div>
+                    </div>
                     <div class="col-md-10">
-                        <b>@p.Emisor.Nombre</b>
+                        <b><a href="~/Usuario/Ver/@p.Emisor.Url">@p.Emisor.Nombre</a></b>
                         @if (p.Para != p.De)
                         {
-                            <small><i class="fa fa-play"></i></small>@p.Receptor.Nombre @p.Receptor.Apellido
+                            <small><i class="fa fa-play"></i></small><a href="~/Usuario/Ver/@p.Receptor.Url">@p.Receptor.Nombre @p.Receptor.Apellido</a>
                         }
                         <br />
                         <small class="text-muted">@ViewHelper.TimeAgo(p.FechaRegistro)</small>

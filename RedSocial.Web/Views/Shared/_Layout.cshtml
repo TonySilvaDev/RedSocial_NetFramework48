@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Usuario usuario = LayoutViewModel.ObtenerUsuarioLogeado(); // Usuario en Session
+    List<Usuario> usuarios = LayoutViewModel.ListarUsuariosAlAzar(); // Programadores
+}
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <title>@ViewBag.Title</title>
@@ -48,15 +52,15 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">@*@usuario.Nombre*@<b class="caret"></b></a>
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">@usuario.Nombre<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="~/Usuario/Perfil">Modificar Mis Datos</a></li>
                                 <li class="divider"></li>
-                                @*@if (usuario.Admin == 1)
+                                @if (usuario.Admin == 1)
                                 {
                                     <li><a href="~/Admin/Reporte">Admon. de usuarios</a></li>
                                     <li class="divider"></li>
-                                }*@
+                                }
 
                                 <li><a href="~/Usuario/Logout">Desconectarme</a></li>
                             </ul>
@@ -66,7 +70,60 @@
             </div><!-- /.container-fluid -->
         </nav>
 
+        @if (usuario.Sexo == null || usuario.FechaNacimiento == null)
+        {
+            <div class="alert alert-warning text-center">Su perfil no esta completado, haga click en <a href="~/Usuario/Perfil"><b>este enlace</b></a> para hacerlo ahora.</div>
+        }
+
         <div class="row">
+            <div class="col-md-3 col-sm-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Mi Perfil</div>
+                    <div class="panel-body">
+                        <div class="thumbnail">
+                            <a href="~/Usuario/Ver/@usuario.Url">
+                                <img src="~/Uploads/@usuario.Foto.Foto2" alt="@usuario.Nombre" />
+                            </a>
+                        </div>
+                        <ul class="list-unstyled">
+                            <li><b>Nombre:</b> @usuario.Nombre</li>
+                            @if (usuario.FechaNacimiento != null)
+                            {
+                                <li>
+                                    <b>Edad:</b> @(ViewHelper.GetAge(usuario.FechaNacimiento)) años
+                                </li>
+                            }
+                            @if (usuario.Sexo > 0)
+                            {
+                                <li>
+                                    <b>Sexo:</b> @(usuario.Sexo == 1 ? "Hombre" : "Mujer")
+                                </li>
+                            }
+                            @if (usuario.UsuarioConocimientos != null)
+                            {
+                                <li>
+                                    <b>Conocimientos:</b> @usuario.UsuarioConocimientos.Count()
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="panel-heading">Programadores</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            @foreach (var u in usuarios)
+                            {
+                                <div class="col-md-4">
+                                    <div class="thumbnail">
+                                        <a href="~/Usuario/Ver/@u.Url">
+                                            <img src="~/Uploads/@u.Foto.Foto3" alt="@u.Nombre" title="@u.Nombre" />
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-9 col-sm-9">
                 @RenderBody()
             </div>
