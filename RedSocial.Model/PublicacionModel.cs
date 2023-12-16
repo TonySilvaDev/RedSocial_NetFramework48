@@ -62,5 +62,27 @@ namespace RedSocial.Model
 
             return publicaciones;
         }
+
+        public ResponseModel Registrar(Publicacion publicacion)
+        {
+            using (var context = new RedSocialContext())
+            {
+                try
+                {
+                    // Llenamos los valores que faltan
+                    publicacion.FechaRegistro = ViewHelper.getDate(true);
+
+                    context.Publicacion.Add(publicacion);
+                    context.SaveChanges();
+                    rm.SetResponse(true);
+                }
+                catch (Exception e)
+                {
+                    ELog.Save(this, e);
+                }
+            }
+
+            return rm;
+        }
     }
 }

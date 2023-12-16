@@ -3,6 +3,48 @@
     int usuario_id = ViewBag.Usuario_id;
 }
 
+<script>
+    $(document).ready(function () {
+        $("#contenido").keyup(function (e) {
+            var obj = $(this);
+            if (e.keyCode == 13) {
+                if (obj.val().length > 5) {
+                    var para = @usuario_id;
+                    var de = @SessionHelper.GetUser();
+                    $.ajax({
+                        data: {
+                            Contenido: obj.val(),
+                            Para: para,
+                            De: de
+                        },
+                        url: base_url('Usuario/Publicar'),
+                        type: 'POST',
+                        beforeSend: function () {
+                            obj.val('Su publicación esta siendo enviada, espere un momento...');
+                            obj.attr('disabled', true);
+                        },
+                        success: function (r) {
+                            obj.attr('disabled', false);
+                            if (r.response) {
+                                obj.val('');
+                                CargarPublicaciones();
+                            }
+                            else {
+                                alert(r.message);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+<div class="form-group">
+    <input type="text" maxlength="300" placeholder="¿Que estas pensando?" autocomplete="off" class="form-control" id="contenido" name="contenido" />
+    <span class="help-block">Escribe lo que deseas publicar y luego presiona Enter.</span>
+</div>
+
 <div class="row">
     @foreach (var p in Model)
     {
