@@ -2,14 +2,17 @@
 using RedSocial.Helper;
 using RedSocial.Model;
 using RedSocial.Web.CustomAttributes;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 
 namespace RedSocial.Web.Controllers
 {
     public class UsuarioController : Controller
     {
-        private UsuarioModel um = new UsuarioModel();
-        private PublicacionModel pm = new PublicacionModel();
+        private readonly UsuarioModel um = new UsuarioModel();
+        private readonly ConocimientoModel cm = new ConocimientoModel();
+        private readonly PublicacionModel pm = new PublicacionModel();
 
         // GET: Usuario
         public ActionResult Index()
@@ -17,10 +20,52 @@ namespace RedSocial.Web.Controllers
             return View();
         }
 
+        public ActionResult Perfil()
+        {
+            ViewBag.Conocimientos = cm.Listar();
+            return View(um.Obtener(SessionHelper.GetUser()));
+        }
+
         public ActionResult Ver(string name)
         {
             int id = ViewHelper.GetIdFromUrl(name);
             return View(um.Obtener(id));
+        }
+
+        [HttpPost]
+        public JsonResult Actualizar(Usuario usuario, List<int> Conocimiento_id = null, HttpPostedFileBase file = null)
+        {
+            if (usuario.Contrasena == null)
+            {
+                ModelState.Remove("Contrasena");
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Agregamos el usuario que queremos actualizar
+                usuario.id = SessionHelper.GetUser();
+
+                if (Conocimiento_id != null)
+                {
+                    // Agregamos todos los valores seleccionadosa una lista de UsuarioConocimiento
+                    List<UsuarioConocimiento> conocimientos = new List<UsuarioConocimiento>();
+                    foreach (var c in Conocimiento_id)
+                    {
+                        conocimientos.Add(new UsuarioConocimiento
+                        {
+                            Conocimiento_id = c,
+                            Usuario_id = usuario.id
+                        });
+                    }
+
+                    usuario.UsuarioConocimientos = conocimientos;
+                }
+                return Json(um.Actualizar(usuario, file));
+            }
+            else
+            {
+                return Json(new { response = false, message = "Ocurrió un error con la validación del formulario." });
+            }
         }
 
         [HttpPost]

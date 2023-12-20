@@ -1,0 +1,76 @@
+﻿@model Usuario
+@{
+    ViewBag.Title = "Perfil";
+    List<Conocimiento> conocimientos = ViewBag.Conocimientos;
+}
+
+<div class="page-header remove-margin-top">
+    <h1>Mi Perfil</h1>
+</div>
+
+@using (Html.BeginForm("Actualizar", "Usuario", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>Nombre</label>
+        @Html.ValidationMessageFor(model => model.Nombre)
+        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = "Ingrese su nombre", maxlength = 20 })
+    </div>
+    <div class="form-group">
+        <label>Apellido</label>
+        @Html.ValidationMessageFor(model => model.Apellido)
+        @Html.TextBoxFor(model => model.Apellido, new { @class = "form-control", placeholder = "Ingrese su apellido", maxlength = 20 })
+    </div>
+    <div class="form-group">
+        <label>Fecha De Nacimiento</label>
+        @Html.ValidationMessageFor(model => model.FechaNacimiento)
+        @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control birthday", placeholder = "Ingrese su decha de nacimiento", maxlength = 20 })
+    </div>
+    <b>Seleccione sus conocimientos</b>
+    <div class="row">
+        @foreach (var c in conocimientos)
+        {
+            var check = false;
+
+            foreach (var cu in Model.UsuarioConocimientos)
+            {
+                if (cu.Conocimiento_id == c.id) { check = true; break; }
+            }
+
+            <div class="form-group col-md-2">
+                <label class="checkbox-inline">
+                    @c.Nombre
+                    <input name="Conocimiento_id" type="checkbox" value="@c.id" @(check ? "checked" : "") />
+                </label>
+            </div>
+
+            check = false;
+        }
+    </div>
+    <div class="form-group">
+        <label>Correo</label>
+        @Html.ValidationMessageFor(model => model.Correo)
+        @Html.TextBoxFor(model => model.Correo, new { @class = "form-control", placeholder = "Ingresa tu correo", maxlength = 50 })
+    </div>
+    <!-- Lo hacemos manualmente para que omita la valicación del javascript -->
+    <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" name="Contrasena" class="form-control" />
+        <span class="help-block">Si desea actualizar la contraseña ingrese una nueva.</span>
+    </div>
+    <div class="form-group">
+        <label class="radio-inline">
+            Hombre
+            <input name="Sexo" type="radio" value="1" @(Model.Sexo == 1 ? "checked" : "") />
+        </label>
+        <label class="radio-inline">
+            Mujer
+            <input name="Sexo" type="radio" value="1" @(Model.Sexo == 2 ? "checked" : "") />
+        </label>
+    </div>
+    <div class="form-group">
+        <label>Imagen</label>
+        <input type="file" name="file" />
+        <span class="help-block">Debe adjuntar imagenes no mayores a 500kb.</span>
+    </div>
+    <button data-ajax="true" type="submit" class="btn btn-default">Guardar</button>
+}

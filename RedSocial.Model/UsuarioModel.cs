@@ -2,10 +2,10 @@
 using RedSocial.Helper;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace RedSocial.Model
 {
@@ -127,6 +127,94 @@ namespace RedSocial.Model
 
                     rm.SetResponse(true);
                     rm.href = "inicio";
+                }
+                catch (Exception e)
+                {
+                    ELog.Save(this, e);
+                }
+            }
+
+            return rm;
+        }
+
+        public ResponseModel Actualizar(Usuario usuario, HttpPostedFileBase file)
+        {
+            using (var context = new RedSocialContext())
+            {
+                try
+                {
+                    // Seteamos la fecha al formato YYYY/MM/DD
+                    usuario.FechaNacimiento = ViewHelper.ConvertToDate(usuario.FechaNacimiento);
+
+                    if (file != null)
+                    {
+                        // Este es un helper que yo cree para crear copias de imagenes y validar, no existe en el marco de ASP.NET MVC
+                        var rpta = ImageHelper.TryParse(file, 500);
+
+                        if (rpta != "")
+                        {
+                            rm.SetResponse(false, rpta);
+
+                            // Lanzamos una exception en caso de que la imagen no sea valida
+                            throw new Exception(rpta);
+                        }
+                        /* Ahora debemos guardar la foto, agregando el ID del usuario al campo Relacion de la tabla Foto
+                         * Lo que hice fue crear un Modelo que implemente la logica de guardar una foto en la base de datos
+                         * y crear copia usando el Helper que yo creo para Imagenes */
+                        FotoModel.Registrar(context, file, new int[] { 500, 300, 100 }, FotoRelacion + usuario.id);
+                    }
+
+                    // Quitamos la validacion
+                    context.Configuration.ValidateOnSaveEnabled = false;
+
+                    // Registramos la entidad
+                    var ctxUsuario = context.Entry(usuario);
+
+                    // Le indicamos que es del tipo Update
+                    ctxUsuario.State = EntityState.Modified;
+
+                    //// Seteamos la fecha al formato YYYY/MM/DD
+                    //usuario.FechaNacimiento = ViewHelper.ConvertToDate(usuario.FechaNacimiento);
+
+                    // url del usuario
+                    usuario.Url = ViewHelper.ConvertNameToUrl(usuario.Nombre, usuario.Apellido, usuario.id.ToString());
+
+                    // Campos que no queremos que toque
+                    ctxUsuario.Property(x => x.Admin).IsModified = false;
+
+                    if (usuario.Contrasena == null) // Retiramos contraseña de la actualización
+                    {
+                        ctxUsuario.Property(x => x.Contrasena).IsModified = false;
+                    }
+                    else
+                    {// Si la contraseña ha sido cambiada, la actualizamos a MD5
+                        usuario.Contrasena = HashHelper.MD5(usuario.Contrasena);
+                    }
+
+                    /* Antes de agregar los conocimientos debemos borrar los conocimientos que ya tenga este usuario
+                        * para evitar registros duplicados. Si seguimos el esquema de entity framework, primero tendriamos
+                        * que traer todo los conocimientos que tiene este usuario e indificarle que los elimine. Pero
+                        * esto no me parece muy optimo, ya que si tuviera 1000 conocimientos, hariamos demasiados querys */
+
+                    // Asi que la solucion es hacer un query manual
+                    context.Database.ExecuteSqlCommand("DELETE FROM UsuarioConocimiento WHERE usuario_id = @usuario_id",
+                                                        new SqlParameter("usuario_id", usuario.id));
+
+                    // Agregamos los conocimientos
+                    if (usuario.UsuarioConocimientos != null)
+                    {
+                        // Indicamos que el estado es del tipo insert
+                        foreach (var c in usuario.UsuarioConocimientos)
+                        {
+                            context.Entry(c).State = EntityState.Added;
+                        }
+                    }
+
+                    // Grabamos
+                    context.SaveChanges();
+
+                    rm.SetResponse(true);
+                    if (file != null) rm.href = "self";
                 }
                 catch (Exception e)
                 {
