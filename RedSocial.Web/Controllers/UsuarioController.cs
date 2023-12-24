@@ -88,5 +88,14 @@ namespace RedSocial.Web.Controllers
             SessionHelper.DestroyUserSession();
             return Redirect("~");
         }
+
+        [OnlyAjaxRequest]
+        public PartialViewResult Publicaciones(int usuario_id) // El Partial View ignora el layout
+        {
+            ViewBag.Usuario_id = usuario_id;
+            /* Como en este caso la vista no se encuentra en view/usuario/publicaciones.cshtml
+             * le indicamos que la busque en otro lado pasandole el primero parametro */
+            return PartialView("~/Views/Inicio/Publicaciones.cshtml", pm.Listar(usuario_id));
+        }
     }
 }

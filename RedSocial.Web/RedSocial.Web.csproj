@@ -151,6 +151,7 @@
     <Content Include="Views\Inicio\Index.cshtml" />
     <Content Include="Views\Inicio\Publicaciones.cshtml" />
     <Content Include="Views\Usuario\Perfil.cshtml" />
+    <Content Include="Views\Usuario\Ver.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

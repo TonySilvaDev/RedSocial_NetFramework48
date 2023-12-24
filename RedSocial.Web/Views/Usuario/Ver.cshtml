@@ -1,0 +1,58 @@
+﻿@model Usuario
+@{
+    ViewBag.Title = Model.Nombre + " " + Model.Apellido;
+}
+
+<script>
+    $(document).ready(function () {
+        CargarPublicaciones();
+    });
+
+    function CargarPublicaciones() {
+        $("#publicaciones").load(base_url('Usuario/Publicaciones?usuario_id=@Model.id'));
+    }
+</script>
+
+<div class="page-header remove-margin-top">
+    <h1>@Model.Nombre @Model.Apellido</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="well well-sm">
+            <dl class="dl-horizontal">
+                @if (Model.FechaNacimiento != null)
+                {
+                    <dt>Edad</dt>
+                    <dd>@(ViewHelper.GetAge(Model.FechaNacimiento)) años</dd>
+                }
+                @if (Model.Sexo > 0)
+                {
+                    <dt>Sexo</dt>
+                    <dd>@(Model.Sexo == 1 ? "Hombre" : "Mujer")</dd>
+                }
+                <dt>Conicimientos</dt>
+                <dd>
+                    @if (Model.UsuarioConocimientos != null)
+                    {
+                        <div class="row">
+                            @foreach (var uc in Model.UsuarioConocimientos)
+                            {
+                                <div class="col-md-4">
+                                    @uc.Conocimiento.Nombre
+                                </div>
+                            }
+                        </div>
+                    }
+                </dd>
+            </dl>
+        </div>
+        <hr />
+        <div id="publicaciones"></div>
+    </div>
+    <div class="col-md-3">
+        <div class="thumbnail">
+            <img src="~/Uploads/@Model.Foto.Foto1" alt="@Model.Nombre" />
+        </div>
+    </div>
+</div>
