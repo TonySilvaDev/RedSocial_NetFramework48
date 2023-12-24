@@ -82,5 +82,11 @@ namespace RedSocial.Web.Controllers
                 return Json(new { response = false, message = "Ocurrió un error con la validación del formulario." });
             }
         }
+
+        public ActionResult Logout()
+        {
+            SessionHelper.DestroyUserSession();
+            return Redirect("~");
+        }
     }
 }
