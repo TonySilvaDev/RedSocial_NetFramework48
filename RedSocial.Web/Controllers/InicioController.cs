@@ -1,14 +1,11 @@
 ﻿using RedSocial.Helper;
 using RedSocial.Model;
 using RedSocial.Web.CustomAttributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace RedSocial.Web.Controllers
 {
+    [IfNotLoggedAction]
     public class InicioController : Controller
     {
         private PublicacionModel pm = new PublicacionModel();

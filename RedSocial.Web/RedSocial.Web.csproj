@@ -123,6 +123,8 @@
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="CustomAttributes\IfLoggedActionAttribute.cs" />
+    <Compile Include="CustomAttributes\IfNotLoggedActionAttribute.cs" />
     <Compile Include="CustomAttributes\OnlyAjaxRequestAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

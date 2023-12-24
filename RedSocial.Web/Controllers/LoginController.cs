@@ -5,15 +5,16 @@ using System.Web.Mvc;
 
 namespace RedSocial.Web.Controllers
 {
+    [IfLoggedAction]
     public class LoginController : Controller
     {
-        private UsuarioModel um = new UsuarioModel();
+        private readonly UsuarioModel um = new UsuarioModel();
         // GET: Login
         public ActionResult Index()
         {
             return View();
-        }
 
+        }
         [HttpPost]
         [OnlyAjaxRequest]
         public JsonResult Acceder(string Correo, string Contrasena)

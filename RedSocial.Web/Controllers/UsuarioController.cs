@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace RedSocial.Web.Controllers
 {
+    [IfNotLoggedAction]
     public class UsuarioController : Controller
     {
         private readonly UsuarioModel um = new UsuarioModel();
