@@ -1,0 +1,24 @@
+﻿
+@model List<RedSocial.Entity.Reporte>
+
+<table class="table table-striped" width="100%">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Sexo</th>
+            <th width="30%">F. Nac.</th>
+            <th width="15%">Pubs.</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Nombre</td>
+                <td>@(r.Sexo == 1 ? "M" : "F")</td>
+                <td>@RedSocial.Helper.ViewHelper.ConvertToDate(r.FechaNacimiento)</td>
+                <td>@r.Publicaciones</td>
+            </tr>
+        }
+    </tbody>
+</table>

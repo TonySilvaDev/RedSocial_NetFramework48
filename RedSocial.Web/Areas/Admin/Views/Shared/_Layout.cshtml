@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/Assets/favicon.ico" />
+
+    <!-- META INFO -->
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Una Red Social Para Trabajadores" />
+    <meta name="generator" content="Hermes CMS" />
+
+    <link href="~/Assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/style.css" rel="stylesheet" />
+    <link href="~/Assets/js/datepicker/css/datepicker.css" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="~/Assets/js/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+    <script>
+        function base_url(url) {
+            return '@(Url.Content("~/"))' + url;
+        }
+        function redirect(href) {
+            window.location.href = '@(Url.Content("~/"))' + href;
+        }
+    </script>
+
+    <div class="container">
+
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1>Admin</h1>
+                </div>
+                <div class="col-md-3">
+                    <a class="btn btn-primary" href="~/Inicio">Regresar a Red Social</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="~/Admin/Reporte">Reporte De Usuarios</a></li>
+            </ul>
+
+        </div>
+
+        <div class="col-md-10">
+            @RenderBody()
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="text-center">Desarrollado por <b>Antonio Silva</b></div>
+
+    <script src="~/Assets/js/bootstrap.min.js"></script>
+    <script src="~/Assets/js/jquery.form.js"></script>
+    <script src="~/Assets/js/ini.js"></script>
+    <script src="~/Assets/js/jquery.validate.min.js"></script>
+    <script src="~/Assets/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Assets/js/datepicker/js/bootstrap-datepicker.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Reporte de Publicaciones Por Usuario";
+}
+
+<script>
+    $(document).ready(function () {
+        $("#reporte").load(base_url('Admin/Reporte/PublicacionesPorUsuario'));
+    });
+</script>
+
+<div class="page-header remove-margin-top">
+    <div class="dropdown pull-right">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-download-alt"></i><span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="~/Admin/Reporte/PublicacionesPorUsuario?format=excel">Descargar en Excel</a></li>
+        </ul>
+    </div>
+    <h2 class="remove-margin-top">Reporte de Publicaciones Por Usuario</h2>
+</div>
+
+<div id="reporte"></div>
