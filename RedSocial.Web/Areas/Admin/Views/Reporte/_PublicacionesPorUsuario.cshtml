@@ -1,5 +1,11 @@
-﻿
-@model List<RedSocial.Entity.Reporte>
+﻿@model List<RedSocial.Entity.Reporte>
+
+@{
+    if (Request.QueryString["format"] == "pdf")
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_PDF.cshtml";
+    }
+}
 
 <table class="table table-striped" width="100%">
     <thead>
