@@ -1,6 +1,7 @@
 ﻿using RedSocial.Entity;
 using RedSocial.Helper;
 using RedSocial.Model;
+using RedSocial.Web.Areas.Admin.CustomAttributes;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace RedSocial.Web.Areas.Admin.Controllers
 {
+    [IsAdmin]
     public class UsuariosController : Controller
     {
         private readonly UsuarioModel um = new UsuarioModel();

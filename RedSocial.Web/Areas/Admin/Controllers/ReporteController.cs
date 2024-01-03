@@ -1,5 +1,6 @@
 ﻿using RazorPDF;
 using RedSocial.Model;
+using RedSocial.Web.Areas.Admin.CustomAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace RedSocial.Web.Areas.Admin.Controllers
 {
+    [IsAdmin]
     public class ReporteController : Controller
     {
         private readonly ReporteModel rm = new ReporteModel();

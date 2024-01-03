@@ -129,6 +129,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ReporteController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsuariosController.cs" />
+    <Compile Include="Areas\Admin\CustomAttributes\IsAdminAttribute.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\InicioController.cs" />

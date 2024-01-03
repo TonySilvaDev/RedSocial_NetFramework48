@@ -322,5 +322,31 @@ namespace RedSocial.Model
 
             return rm;
         }
+
+        public bool EsAdmin(int usuario_id)
+        {
+            var EsAdmin = false;
+
+            using (var context = new RedSocialContext())
+            {
+                try
+                {
+                    var u = context.Usuario
+                        .Where(x => x.id == usuario_id && x.Admin == 1)
+                        .FirstOrDefault();
+
+                    if (u != null)
+                    {
+                        EsAdmin = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ELog.Save(this, e);
+                }
+            }
+
+            return EsAdmin;
+        }
     }
 }
