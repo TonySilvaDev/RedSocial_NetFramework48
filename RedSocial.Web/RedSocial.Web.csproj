@@ -161,6 +161,7 @@
     <Content Include="Areas\Admin\Views\Reporte\_PublicacionesPorUsuario.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_PDF.cshtml" />
     <Content Include="Areas\Admin\Views\Usuarios\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Usuarios\Ver.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

@@ -1,4 +1,5 @@
-﻿using RedSocial.Helper;
+﻿using RedSocial.Entity;
+using RedSocial.Helper;
 using RedSocial.Model;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace RedSocial.Web.Areas.Admin.Controllers
     public class UsuariosController : Controller
     {
         private readonly UsuarioModel um = new UsuarioModel();
+        private readonly ConocimientoModel cm = new ConocimientoModel();
 
         // GET: Admin/Usuarios
         public ActionResult Index(int page = 1)
@@ -31,6 +33,41 @@ namespace RedSocial.Web.Areas.Admin.Controllers
 
             // Restamos -1 ya que linq requiere comenzar en 0
             return View(um.Listar(take, page - 1));
+        }
+
+        public ActionResult Ver(int id)
+        {
+            ViewBag.Conocimientos = cm.Listar();
+            return View(um.Obtener(id));
+        }
+
+        public JsonResult Actualizar(Usuario usuario, List<int> Conocimiento_id = null, HttpPostedFileBase file = null)
+        {
+            if (usuario.Contrasena == null)
+            {
+                ModelState.Remove("Contrasena");
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                if (Conocimiento_id != null)
+                {
+                    // Agregamos todo los valores seleccionados a una lista de UsuarioConocimiento
+                    List<UsuarioConocimiento> conocimientos = new List<UsuarioConocimiento>();
+                    foreach (var c in Conocimiento_id) conocimientos.Add(new UsuarioConocimiento { Conocimiento_id = c, Usuario_id = usuario.id });
+
+                    usuario.UsuarioConocimientos = conocimientos;
+                }
+                var rm = um.Actualizar(usuario, file);
+                if (rm.response) rm.href = "admin/usuarios";
+
+                return Json(rm);
+            }
+            else
+            {
+                return Json(new { response = false, message = "Ocurrio un error con la validación del Formulario." });
+            }
         }
     }
 }
