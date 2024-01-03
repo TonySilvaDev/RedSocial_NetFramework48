@@ -11,9 +11,71 @@ namespace RedSocial.Model
 {
     public class UsuarioModel
     {
-        private ResponseModel rm = new ResponseModel();
+        private readonly ResponseModel rm = new ResponseModel();
         private readonly string FotoRelacion = "U";
 
+        public List<Usuario> Listar(int take, int skip)
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+
+            using (var context = new RedSocialContext())
+            {
+                try
+                {
+                    usuarios = context.Usuario
+                        .OrderBy(x => x.Nombre)
+                        .Skip(take * skip)
+                        .Take(take)
+                        .ToList();
+
+                    // Debemos agregar sus fotos
+                    foreach (var u in usuarios)
+                    {
+                        // Ahora obtenemos su foto
+                        u.Foto = context.Foto
+                            .Where(x => x.Relacion == FotoRelacion + u.id)
+                            .SingleOrDefault();
+
+                        // Si la foto no existe le ponemos una por defecto
+                        if (u.Foto == null)
+                        {
+                            u.Foto = new Foto();
+                        }
+
+                        // Ahora obtenemos los conocimientos de nuestro usuario
+                        u.UsuarioConocimientos = context.UsuarioConocimiento
+                            .Where(x => x.Usuario_id == u.id)
+                            .ToList();
+                    }
+                }
+                catch (Exception e)
+                {
+                    ELog.Save(this, e);
+                }
+            }
+
+            return usuarios;
+        }
+        public int Total()
+        {
+            int t = 0;
+
+            using (var context = new RedSocialContext())
+            {
+                try
+                {
+                    t = context.Usuario
+                        .OrderBy(x => x.Nombre)
+                        .Count();
+                }
+                catch (Exception e)
+                {
+                    ELog.Save(this, e);
+                }
+            }
+
+            return t;
+        }
         public List<Usuario> ListarAlAzar()
         {
             List<Usuario> usuarios = new List<Usuario>();

@@ -128,6 +128,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ReporteController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsuariosController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
@@ -159,6 +160,7 @@
     <Content Include="Areas\Admin\Views\Reporte\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Reporte\_PublicacionesPorUsuario.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_PDF.cshtml" />
+    <Content Include="Areas\Admin\Views\Usuarios\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

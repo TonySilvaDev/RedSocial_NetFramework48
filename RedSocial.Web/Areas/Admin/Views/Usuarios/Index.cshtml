@@ -1,0 +1,28 @@
+﻿@model List<RedSocial.Entity.Usuario>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="remove-margin-top">Index</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 25px;"></th>
+            <th>Nombre</th>
+            <th>Edad</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td><img width="25" src="~/Uploads/@u.Foto.Foto3" /></td>
+                <td><a href="~/Admin/Usuarios/Ver/@u.id">@u.Nombre @u.Apellido</a></td>
+                <td>@RedSocial.Helper.ViewHelper.GetAge(u.FechaNacimiento)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.Raw(ViewBag.Paginacion)
